@@ -1,0 +1,30 @@
+# OSINT agent config — self-hosted model, no cloud keys required.
+# Copy to config.yaml and edit. Secrets (if any) go in the environment,
+# never in this file.
+
+model:
+  # provider: ollama | openai-compatible | none
+  provider: ollama
+  # Ollama default model. Change with: ollama pull <name>, then set here.
+  # Sensible choices: llama3.1:8b (fast, 8B), qwen2.5:14b (stronger, needs ~9 GB RAM),
+  # mistral:7b, llama3.1:70b (needs a GPU / lots of RAM).
+  name: llama3.1:8b
+  endpoint: http://localhost:11434
+  timeout_seconds: 120
+
+limits:
+  max_posts_per_sweep: 5
+  min_seconds_between_calls: 5
+  stop_on_429: true
+  max_tool_seconds: 120
+
+paths:
+  investigator_home: ~/workspace/osint-investigator
+  tools_home: ~/workspace/osint-tools
+  signal_search_home: ~/workspace/signal-search
+  cases_dir: ~/workspace/osint-agent/cases
+  runs_dir: ~/workspace/osint-agent/runs
+
+report:
+  require_6_gate: true
+  mask_private_values: true

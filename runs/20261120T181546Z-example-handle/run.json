@@ -1,0 +1,700 @@
+{
+  "case": {
+    "handles": [
+      "@example-handle"
+    ],
+    "identifiers": [
+      "00:0C:42:1F:65:E9"
+    ],
+    "name": "Example Signal Case",
+    "platforms": [
+      "instagram"
+    ],
+    "question": "Where has this WiFi access point been seen?",
+    "scope": "Read-only public collection"
+  },
+  "plan": [
+    {
+      "step": 1,
+      "tool": "case_intake",
+      "args": {
+        "name": "Example Signal Case",
+        "handles": [
+          "@example-handle"
+        ],
+        "platforms": [
+          "instagram"
+        ],
+        "question": "Where has this WiFi access point been seen?"
+      },
+      "why": "Record intake, create the case folder, strip sensitive values."
+    },
+    {
+      "step": 2,
+      "tool": "handle_enum",
+      "args": {
+        "handle": "@example-handle",
+        "name": "Example Signal Case",
+        "platforms": "instagram",
+        "max_queries": 10
+      },
+      "why": "Public handle search across platforms; a hit is a candidate, not a match, until the identity gates pass."
+    },
+    {
+      "step": 3,
+      "tool": "leak_search",
+      "args": {
+        "target": "@example-handle",
+        "target_type": "handle"
+      },
+      "why": "Public leak-mention search plan (dry-run first); never download paste or dump content."
+    },
+    {
+      "step": 4,
+      "tool": "breach_check",
+      "args": {
+        "target": "@example-handle",
+        "target_type": "handle"
+      },
+      "why": "Breach check, dry-run unless keys are set in env; redacted output only."
+    },
+    {
+      "step": 5,
+      "tool": "signal_search",
+      "args": {
+        "query": "00:0C:42:1F:65:E9"
+      },
+      "why": "One-input signal-database search for this BSSID / MAC / SSID / cell ID: WiGLE, Mylnikov, OpenCelliD, local Kismet / WiGLE files, plus key-required sources only if keys are set in signal-search config. Merged per-source lat/lon; >200 m disagreement flagged, not averaged away."
+    },
+    {
+      "step": 6,
+      "tool": "snapshot",
+      "args": {
+        "username": "example-handle"
+      },
+      "why": "Profile snapshot (counts, bio, private/public) for baseline."
+    },
+    {
+      "step": 7,
+      "tool": "like_sweep",
+      "args": {
+        "targets": "example-handle:5"
+      },
+      "why": "Like/comment sweep, max 5 posts, >=5s apart, stop on HTTP 429. A blocked sweep is not a negative finding."
+    },
+    {
+      "step": 8,
+      "tool": "reverse_image",
+      "args": {
+        "target": "Example Signal Case"
+      },
+      "why": "Reverse-image guidance only: public sources, a match is a lead, not an identity, until the 6 gates pass."
+    },
+    {
+      "step": 9,
+      "tool": "public_records",
+      "args": {
+        "target": "Example Signal Case"
+      },
+      "why": "Public-records search guidance (court, property, business, news); never merge same-name people."
+    },
+    {
+      "step": 10,
+      "tool": "timeline",
+      "args": {
+        "events": "from verified findings only"
+      },
+      "why": "Build a dated timeline from verified events only; flag UNVERIFIED-TIME where no raw timestamp exists."
+    },
+    {
+      "step": 11,
+      "tool": "correlate",
+      "args": {
+        "overlaps": "from verified overlaps only"
+      },
+      "why": "Social graph from verified overlaps only; weak clues are not edges."
+    },
+    {
+      "step": 12,
+      "tool": "report",
+      "args": {},
+      "why": "Structured report: findings with confidence, what was checked and found nothing, what could not be determined, next steps."
+    }
+  ],
+  "tool_results": [
+    {
+      "tool": "case_intake",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:18Z",
+      "confidence": "High",
+      "data": {
+        "name": "Example Signal Case",
+        "handles": [
+          "@example-handle"
+        ],
+        "platforms": [
+          "instagram"
+        ],
+        "question": "Where has this WiFi access point been seen?"
+      },
+      "note": "Intake recorded. Sensitive values (phone/address/DOB/password) are never stored in a case folder."
+    },
+    {
+      "tool": "handle_enum.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:30Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "Handle: @example-handle  variants: ['example-handle']\nPlatforms: instagram  queries: 4  excluded: 0\n  site:instagram.com \"example-handle\": 0 result(s)\n  site:instagram.com/example-handle: 0 result(s)\n  \"Example Signal Case\" site:instagram.com: 0 result(s)\n  \"@example-handle\": 0 result(s)\nSaved: /home/hatch/workspace/osint-investigator/toolkit/results/handle-enum/handle_enum__example-handle__20261120T181530Z.json  (blocked=False)\n",
+        "stderr_tail": ""
+      },
+      "note": ""
+    },
+    {
+      "tool": "leak_search.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:44Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "'\"@example-handle\" \"data breach\"': ok \u2014 0 hit(s)\n'\"@example-handle\" leaked': ok \u2014 0 hit(s)\n'\"@example-handle\" pastebin': ok \u2014 0 hit(s)\n'\"@example-handle\" \"haveibeenpwned\"': ok \u2014 0 hit(s)\n'\"@example-handle\" \"leaked database\"': ok \u2014 0 hit(s)\nSaved: /home/hatch/workspace/osint-tools/results/leak-search/leak_search___example-handle__20261120T181544Z.json\n",
+        "stderr_tail": ""
+      },
+      "note": ""
+    },
+    {
+      "tool": "breach_check.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:44Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/breach_check.py",
+        "args": [
+          "--email",
+          "@example-handle",
+          "--dry-run"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "signal_search",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Medium",
+      "data": {
+        "source": "signal-search (~/workspace/signal-search)",
+        "date": "2026-11-20T18:15:46Z",
+        "query": {
+          "kind": "bssid",
+          "identifier": "00:0C:42:1F:65:E9",
+          "raw": "00:0C:42:1F:65:E9"
+        },
+        "summary": {
+          "providers_queried": 10,
+          "found": 3,
+          "not_found": 0,
+          "not_queried": 6,
+          "errors": 1,
+          "merged_locations": 1,
+          "disagreements_gt_200m": 1
+        },
+        "results": [
+          {
+            "source": "local-kismet",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": 21.3099,
+            "lon": -157.8581,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": "Fixture-AP",
+            "channel": 6,
+            "signal": -65,
+            "confidence": "high",
+            "raw_url": "",
+            "error": "",
+            "status": "found",
+            "extra": {
+              "mac": "00:0C:42:1F:65:E9"
+            }
+          },
+          {
+            "source": "local-wigle",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": 21.3099,
+            "lon": -157.8581,
+            "accuracy": null,
+            "first_seen": "2024-01-02T03:04:05",
+            "last_seen": "",
+            "ssid": "Fixture-AP",
+            "channel": 6,
+            "signal": -65,
+            "confidence": "high",
+            "raw_url": "",
+            "error": "",
+            "status": "found",
+            "extra": {
+              "mac": "00:0C:42:1F:65:E9"
+            }
+          },
+          {
+            "source": "wigle",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "https://wigle.net/search?netid=00%3A0C%3A42%3A1F%3A65%3AE9",
+            "error": "no WiGLE API key \u2014 add wigle.api_name/api_token in config.yaml (free at https://wigle.net/account)",
+            "status": "not_queried",
+            "extra": {}
+          },
+          {
+            "source": "mylnikov",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": 45.22126848434,
+            "lon": 16.54686511005,
+            "accuracy": 154.346,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "https://find-wifi.mylnikov.org/?bssid=00%3A0C%3A42%3A1F%3A65%3AE9",
+            "error": "",
+            "status": "found",
+            "extra": {}
+          },
+          {
+            "source": "3wifi",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "https://3wifi.dev/map.html",
+            "error": "3WiFi request failed (endpoint unverified, may be down): HTTP 403",
+            "status": "error",
+            "extra": {}
+          },
+          {
+            "source": "openwifimap",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "https://openwifimap.net/",
+            "error": "OpenWiFiMap has no BSSID-lookup API (free-router database only; docs endpoint unreachable when checked) \u2014 open the map link to browse the area by hand",
+            "status": "not_queried",
+            "extra": {}
+          },
+          {
+            "source": "mozilla",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "",
+            "error": "no Mozilla Location Service API key \u2014 Mozilla is not currently distributing new MLS keys (per its docs); add mozilla.api_key in config.yaml if you have one",
+            "status": "not_queried",
+            "extra": {}
+          },
+          {
+            "source": "google",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "",
+            "error": "google is off by default \u2014 set enabled.google=true in config.yaml to opt in (commercial / billing)",
+            "status": "not_queried",
+            "extra": {}
+          },
+          {
+            "source": "combain",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "",
+            "error": "combain is off by default \u2014 set enabled.combain=true in config.yaml to opt in (commercial / billing)",
+            "status": "not_queried",
+            "extra": {}
+          },
+          {
+            "source": "skyhook",
+            "identifier": "00:0C:42:1F:65:E9",
+            "lat": null,
+            "lon": null,
+            "accuracy": null,
+            "first_seen": "",
+            "last_seen": "",
+            "ssid": null,
+            "channel": null,
+            "signal": null,
+            "confidence": "medium",
+            "raw_url": "https://www.skyhook.com/",
+            "error": "Skyhook is commercial, key-required, not tested \u2014 no free tier; add skyhook.api_key in config.yaml if you have an account",
+            "status": "not_queried",
+            "extra": {}
+          }
+        ],
+        "merged": [
+          {
+            "identifier": "00:0c:42:1f:65:e9",
+            "ssid": "Fixture-AP",
+            "mean_lat": 29.280356161446665,
+            "mean_lon": -99.72311162998334,
+            "spread_m": 12595460.6,
+            "disagree_gt_200m": true,
+            "sources": [
+              {
+                "source": "local-kismet",
+                "identifier": "00:0C:42:1F:65:E9",
+                "lat": 21.3099,
+                "lon": -157.8581,
+                "accuracy": null,
+                "first_seen": "",
+                "last_seen": "",
+                "ssid": "Fixture-AP",
+                "channel": 6,
+                "signal": -65,
+                "confidence": "high",
+                "raw_url": "",
+                "error": "",
+                "status": "found",
+                "extra": {
+                  "mac": "00:0C:42:1F:65:E9"
+                }
+              },
+              {
+                "source": "local-wigle",
+                "identifier": "00:0C:42:1F:65:E9",
+                "lat": 21.3099,
+                "lon": -157.8581,
+                "accuracy": null,
+                "first_seen": "2024-01-02T03:04:05",
+                "last_seen": "",
+                "ssid": "Fixture-AP",
+                "channel": 6,
+                "signal": -65,
+                "confidence": "high",
+                "raw_url": "",
+                "error": "",
+                "status": "found",
+                "extra": {
+                  "mac": "00:0C:42:1F:65:E9"
+                }
+              },
+              {
+                "source": "mylnikov",
+                "identifier": "00:0C:42:1F:65:E9",
+                "lat": 45.22126848434,
+                "lon": 16.54686511005,
+                "accuracy": 154.346,
+                "first_seen": "",
+                "last_seen": "",
+                "ssid": null,
+                "channel": null,
+                "signal": null,
+                "confidence": "medium",
+                "raw_url": "https://find-wifi.mylnikov.org/?bssid=00%3A0C%3A42%3A1F%3A65%3AE9",
+                "error": "",
+                "status": "found",
+                "extra": {}
+              }
+            ]
+          }
+        ]
+      },
+      "note": "Found in 3 source(s), not queried in 6, errors in 1. A source not queried is not a negative finding; a BSSID absent from every database is not proof it does not exist. Sources disagree by >200 m \u2014 see per-source rows, not the mean."
+    },
+    {
+      "tool": "snapshot.py",
+      "status": "error",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Unverified",
+      "data": {
+        "returncode": 2,
+        "stdout_tail": "",
+        "stderr_tail": "ERROR snapshot example-handle: instagram-cli failed rc=1: Error: fetch Instagram profile\n\nCaused by:\n    instagram cli failed with HTTP 403 Forbidden: Instagram Account Action Required: Your Instagram account requires attention. Open Instagram, complete any pending sign-in, password, or security steps, then try again.\n"
+      },
+      "note": ""
+    },
+    {
+      "tool": "like_sweep.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "saved /home/hatch/workspace/monitoring/courtney-gibo/snapshots/like_sweep__20261120T181546Z.json\nchecked 0 posts, hits: 0\n",
+        "stderr_tail": "STOPPED: instagram-cli failed rc=1: Error: fetch Instagram posts\n\nCaused by:\n    instagram cli failed with HTTP 403 Forbidden: Instagram Account Action Required: Your Instagram account requires attention. Open Instagram, complete any pending sign-in, password, or security steps, then try again.\n"
+      },
+      "note": ""
+    },
+    {
+      "tool": "reverse_image",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Unverified",
+      "data": {
+        "steps": [
+          "Google Lens: lens.google.com/upload",
+          "Yandex Images: yandex.com/images/search",
+          "TinEye: tineye.com",
+          "Compare: same photo + handle + context across platforms"
+        ]
+      },
+      "note": "Guidance only \u2014 no API key, no automated image upload. A match is a lead until the 6 gates pass."
+    },
+    {
+      "tool": "public_records",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Unverified",
+      "data": {
+        "sources": [
+          "eCourt Kokua (Hawaii courts, browser + CAPTCHA)",
+          "Hawaii DCCA business search",
+          "County property / tax records",
+          "News archives (Star-Advertiser, Civil Beat)"
+        ]
+      },
+      "note": "Guidance only \u2014 live record searches need the browser agent. A no-hit is not proof of no record."
+    },
+    {
+      "tool": "timeline",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "dated, sourced events only; gaps left as gaps"
+      },
+      "note": "Timeline built from the verified findings in this run."
+    },
+    {
+      "tool": "correlate",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:15:46Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "verified overlaps only as edges"
+      },
+      "note": "Graph built from the verified overlaps in this run."
+    }
+  ],
+  "verified": [
+    {
+      "claim": "Tool case_intake ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool handle_enum.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool leak_search.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool breach_check.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool signal_search ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool snapshot.py errored \u2014 no evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool like_sweep.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool reverse_image returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool public_records returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool timeline ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool correlate ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    }
+  ],
+  "counts": {
+    "Low": 7,
+    "Unverified": 4
+  },
+  "llm_note": "no-model mode: no local model reachable/configured; LLM step skipped, tools and 6-gate verifier still ran.",
+  "llm_plan_draft": "",
+  "llm_synthesis_draft": "",
+  "sanitise_notes": [],
+  "report": "/home/hatch/workspace/osint-agent/runs/20261120T181546Z-example-handle/report.md"
+}

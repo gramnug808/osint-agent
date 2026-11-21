@@ -1,0 +1,408 @@
+{
+  "case": {
+    "name": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA",
+    "target": "Courtney Gibo",
+    "handles": [
+      "_courtg.5",
+      "cgibo"
+    ],
+    "question": "Is Courtney Gibo a teacher in Hawaii? Softball background? Any link to HBA (Hawaii Baptist Academy)?",
+    "identifiers": [],
+    "context": "Wife of user. Instagram @_courtg.5, private. Known: Saint Mark Lutheran School Kaneohe staff 2013-2019, Hawaii DOE Elementary Teacher 2021-2024, Pac-Five softball 2003-2007 pitcher, Maryknoll 2003-2005. Search for HBA link and any new teacher/softball record."
+  },
+  "plan": [
+    {
+      "step": 1,
+      "tool": "case_intake",
+      "args": {
+        "name": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA",
+        "handles": [
+          "_courtg.5",
+          "cgibo"
+        ],
+        "platforms": [
+          "instagram"
+        ],
+        "question": "Is Courtney Gibo a teacher in Hawaii? Softball background? Any link to HBA (Hawaii Baptist Academy)?"
+      },
+      "why": "Record intake, create the case folder, strip sensitive values."
+    },
+    {
+      "step": 2,
+      "tool": "handle_enum",
+      "args": {
+        "handle": "_courtg.5",
+        "name": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA",
+        "platforms": "instagram",
+        "max_queries": 10
+      },
+      "why": "Public handle search across platforms; a hit is a candidate, not a match, until the identity gates pass."
+    },
+    {
+      "step": 3,
+      "tool": "leak_search",
+      "args": {
+        "target": "_courtg.5",
+        "target_type": "handle"
+      },
+      "why": "Public leak-mention search plan (dry-run first); never download paste or dump content."
+    },
+    {
+      "step": 4,
+      "tool": "breach_check",
+      "args": {
+        "target": "_courtg.5",
+        "target_type": "handle"
+      },
+      "why": "Breach check, dry-run unless keys are set in env; redacted output only."
+    },
+    {
+      "step": 5,
+      "tool": "snapshot",
+      "args": {
+        "username": "_courtg.5"
+      },
+      "why": "Profile snapshot (counts, bio, private/public) for baseline."
+    },
+    {
+      "step": 6,
+      "tool": "like_sweep",
+      "args": {
+        "targets": "_courtg.5:5"
+      },
+      "why": "Like/comment sweep, max 5 posts, >=5s apart, stop on HTTP 429. A blocked sweep is not a negative finding."
+    },
+    {
+      "step": 7,
+      "tool": "reverse_image",
+      "args": {
+        "target": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA"
+      },
+      "why": "Reverse-image guidance only: public sources, a match is a lead, not an identity, until the 6 gates pass."
+    },
+    {
+      "step": 8,
+      "tool": "public_records",
+      "args": {
+        "target": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA"
+      },
+      "why": "Public-records search guidance (court, property, business, news); never merge same-name people."
+    },
+    {
+      "step": 9,
+      "tool": "timeline",
+      "args": {
+        "events": "from verified findings only"
+      },
+      "why": "Build a dated timeline from verified events only; flag UNVERIFIED-TIME where no raw timestamp exists."
+    },
+    {
+      "step": 10,
+      "tool": "correlate",
+      "args": {
+        "overlaps": "from verified overlaps only"
+      },
+      "why": "Social graph from verified overlaps only; weak clues are not edges."
+    },
+    {
+      "step": 11,
+      "tool": "report",
+      "args": {},
+      "why": "Structured report: findings with confidence, what was checked and found nothing, what could not be determined, next steps."
+    }
+  ],
+  "tool_results": [
+    {
+      "tool": "case_intake",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:47:43Z",
+      "confidence": "High",
+      "data": {
+        "name": "Courtney Gibo \u2014 teacher, Hawaii, softball, HBA",
+        "handles": [
+          "_courtg.5",
+          "cgibo"
+        ],
+        "platforms": [
+          "instagram"
+        ],
+        "question": "Is Courtney Gibo a teacher in Hawaii? Softball background? Any link to HBA (Hawaii Baptist Academy)?"
+      },
+      "note": "Intake recorded. Sensitive values (phone/address/DOB/password) are never stored in a case folder."
+    },
+    {
+      "tool": "handle_enum.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:13Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "Handle: @_courtg.5  variants: ['_courtg.5', '_courtg_5', '.courtg.5', '_courtg5', 'courtg.5']\nPlatforms: instagram  queries: 10  excluded: 0\n  site:instagram.com \"_courtg.5\": 0 result(s)\n  site:instagram.com/_courtg.5: 0 result(s)\n  site:instagram.com \"_courtg_5\": 0 result(s)\n  site:instagram.com/_courtg_5: 0 result(s)\n  site:instagram.com \".courtg.5\": 0 result(s)\n  site:instagram.com/.courtg.5: 0 result(s)\n  site:instagram.com \"_courtg5\": 0 result(s)\n  site:instagram.com/_courtg5: 0 result(s)\n  site:instagram.com \"courtg.5\": 0 result(s)\n  site:instagram.com/courtg.5: 0 result(s)\nSaved: /home/hatch/workspace/osint-investigator/toolkit/results/handle-enum/handle_enum___courtg.5__20261120T184813Z.json  (blocked=False)\n",
+        "stderr_tail": ""
+      },
+      "note": ""
+    },
+    {
+      "tool": "leak_search.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:28Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "'\"_courtg.5\" \"data breach\"': ok \u2014 0 hit(s)\n'\"_courtg.5\" leaked': ok \u2014 0 hit(s)\n'\"_courtg.5\" pastebin': ok \u2014 0 hit(s)\n'\"_courtg.5\" \"haveibeenpwned\"': ok \u2014 0 hit(s)\n'\"_courtg.5\" \"leaked database\"': ok \u2014 0 hit(s)\nSaved: /home/hatch/workspace/osint-tools/results/leak-search/leak_search___courtg.5__20261120T184828Z.json\n",
+        "stderr_tail": ""
+      },
+      "note": ""
+    },
+    {
+      "tool": "breach_check.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:28Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/breach_check.py",
+        "args": [
+          "--username",
+          "_courtg.5",
+          "--dry-run"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "snapshot.py",
+      "status": "error",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:28Z",
+      "confidence": "Unverified",
+      "data": {
+        "returncode": 2,
+        "stdout_tail": "",
+        "stderr_tail": "ERROR snapshot _courtg.5: instagram-cli failed rc=1: Error: fetch Instagram profile\n\nCaused by:\n    instagram cli failed with HTTP 403 Forbidden: Instagram Account Action Required: Your Instagram account requires attention. Open Instagram, complete any pending sign-in, password, or security steps, then try again.\n"
+      },
+      "note": ""
+    },
+    {
+      "tool": "like_sweep.py",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:29Z",
+      "confidence": "Medium",
+      "data": {
+        "returncode": 0,
+        "stdout_tail": "saved /home/hatch/workspace/monitoring/courtney-gibo/snapshots/like_sweep__20261120T184829Z.json\nchecked 0 posts, hits: 0\n",
+        "stderr_tail": "STOPPED: instagram-cli failed rc=1: Error: fetch Instagram posts\n\nCaused by:\n    instagram cli failed with HTTP 403 Forbidden: Instagram Account Action Required: Your Instagram account requires attention. Open Instagram, complete any pending sign-in, password, or security steps, then try again.\n"
+      },
+      "note": ""
+    },
+    {
+      "tool": "reverse_image",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:29Z",
+      "confidence": "Unverified",
+      "data": {
+        "steps": [
+          "Google Lens: lens.google.com/upload",
+          "Yandex Images: yandex.com/images/search",
+          "TinEye: tineye.com",
+          "Compare: same photo + handle + context across platforms"
+        ]
+      },
+      "note": "Guidance only \u2014 no API key, no automated image upload. A match is a lead until the 6 gates pass."
+    },
+    {
+      "tool": "public_records",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:29Z",
+      "confidence": "Unverified",
+      "data": {
+        "sources": [
+          "eCourt Kokua (Hawaii courts, browser + CAPTCHA)",
+          "Hawaii DCCA business search",
+          "County property / tax records",
+          "News archives (Star-Advertiser, Civil Beat)"
+        ]
+      },
+      "note": "Guidance only \u2014 live record searches need the browser agent. A no-hit is not proof of no record."
+    },
+    {
+      "tool": "timeline",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:29Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "dated, sourced events only; gaps left as gaps"
+      },
+      "note": "Timeline built from the verified findings in this run."
+    },
+    {
+      "tool": "correlate",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:48:29Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "verified overlaps only as edges"
+      },
+      "note": "Graph built from the verified overlaps in this run."
+    }
+  ],
+  "verified": [
+    {
+      "claim": "Tool case_intake ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool handle_enum.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool leak_search.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool breach_check.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool snapshot.py errored \u2014 no evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool like_sweep.py ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool reverse_image returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool public_records returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool timeline ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool correlate ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    }
+  ],
+  "counts": {
+    "Low": 6,
+    "Unverified": 4
+  },
+  "llm_note": "no-model mode: no local model reachable/configured; LLM step skipped, tools and 6-gate verifier still ran.",
+  "llm_plan_draft": "",
+  "llm_synthesis_draft": "",
+  "sanitise_notes": [],
+  "report": "/home/hatch/workspace/osint-agent/runs/20261120T184829Z-courtg-5/report.md"
+}

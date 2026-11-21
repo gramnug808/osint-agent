@@ -1,0 +1,436 @@
+{
+  "case": {
+    "authorisation": "Example case only \u2014 no real target, no authorisation needed.",
+    "case_id": "example-target",
+    "created": "2026-11-20T00:00:00Z",
+    "created_tz": "Pacific/Honolulu",
+    "evidence_dir": "evidence/",
+    "exclusions": [],
+    "handles": [
+      "@example-handle"
+    ],
+    "name": "Example Target",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "question": "Is there a public footprint?",
+    "scope": "Read-only public collection",
+    "status": "open"
+  },
+  "plan": [
+    {
+      "step": 1,
+      "tool": "case_intake",
+      "args": {
+        "name": "Example Target",
+        "handles": [
+          "@example-handle"
+        ],
+        "platforms": [
+          "instagram",
+          "facebook"
+        ],
+        "question": "Is there a public footprint?"
+      },
+      "why": "Record intake, create the case folder, strip sensitive values."
+    },
+    {
+      "step": 2,
+      "tool": "handle_enum",
+      "args": {
+        "handle": "@example-handle",
+        "name": "Example Target",
+        "platforms": "instagram,facebook",
+        "max_queries": 10
+      },
+      "why": "Public handle search across platforms; a hit is a candidate, not a match, until the identity gates pass."
+    },
+    {
+      "step": 3,
+      "tool": "leak_search",
+      "args": {
+        "target": "@example-handle",
+        "target_type": "handle"
+      },
+      "why": "Public leak-mention search plan (dry-run first); never download paste or dump content."
+    },
+    {
+      "step": 4,
+      "tool": "breach_check",
+      "args": {
+        "target": "@example-handle",
+        "target_type": "handle"
+      },
+      "why": "Breach check, dry-run unless keys are set in env; redacted output only."
+    },
+    {
+      "step": 5,
+      "tool": "snapshot",
+      "args": {
+        "username": "example-handle"
+      },
+      "why": "Profile snapshot (counts, bio, private/public) for baseline."
+    },
+    {
+      "step": 6,
+      "tool": "like_sweep",
+      "args": {
+        "targets": "example-handle:5"
+      },
+      "why": "Like/comment sweep, max 5 posts, >=5s apart, stop on HTTP 429. A blocked sweep is not a negative finding."
+    },
+    {
+      "step": 7,
+      "tool": "reverse_image",
+      "args": {
+        "target": "Example Target"
+      },
+      "why": "Reverse-image guidance only: public sources, a match is a lead, not an identity, until the 6 gates pass."
+    },
+    {
+      "step": 8,
+      "tool": "public_records",
+      "args": {
+        "target": "Example Target"
+      },
+      "why": "Public-records search guidance (court, property, business, news); never merge same-name people."
+    },
+    {
+      "step": 9,
+      "tool": "timeline",
+      "args": {
+        "events": "from verified findings only"
+      },
+      "why": "Build a dated timeline from verified events only; flag UNVERIFIED-TIME where no raw timestamp exists."
+    },
+    {
+      "step": 10,
+      "tool": "correlate",
+      "args": {
+        "overlaps": "from verified overlaps only"
+      },
+      "why": "Social graph from verified overlaps only; weak clues are not edges."
+    },
+    {
+      "step": 11,
+      "tool": "report",
+      "args": {},
+      "why": "Structured report: findings with confidence, what was checked and found nothing, what could not be determined, next steps."
+    }
+  ],
+  "tool_results": [
+    {
+      "tool": "case_intake",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "High",
+      "data": {
+        "name": "Example Target",
+        "handles": [
+          "@example-handle"
+        ],
+        "platforms": [
+          "instagram",
+          "facebook"
+        ],
+        "question": "Is there a public footprint?"
+      },
+      "note": "Intake recorded. Sensitive values (phone/address/DOB/password) are never stored in a case folder."
+    },
+    {
+      "tool": "handle_enum.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-investigator/toolkit/handle_enum.py",
+        "args": [
+          "--handle",
+          "@example-handle",
+          "--name",
+          "Example Target",
+          "--platforms",
+          "instagram,facebook",
+          "--max-queries",
+          "10",
+          "--dry-run"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "leak_search.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/leak_search.py",
+        "args": [
+          "--target",
+          "@example-handle",
+          "--target-type",
+          "handle",
+          "--max-queries",
+          "5",
+          "--dry-run"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "breach_check.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/breach_check.py",
+        "args": [
+          "--email",
+          "@example-handle",
+          "--dry-run"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "snapshot.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/snapshot.py",
+        "args": [
+          "--username",
+          "example-handle"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "like_sweep.py",
+      "status": "dry_run",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "script": "/home/hatch/workspace/osint-tools/like_sweep.py",
+        "args": [
+          "--targets",
+          "example-handle:5"
+        ]
+      },
+      "note": "Dry-run: plan only, no network, no live check."
+    },
+    {
+      "tool": "reverse_image",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "steps": [
+          "Google Lens: lens.google.com/upload",
+          "Yandex Images: yandex.com/images/search",
+          "TinEye: tineye.com",
+          "Compare: same photo + handle + context across platforms"
+        ]
+      },
+      "note": "Guidance only \u2014 no API key, no automated image upload. A match is a lead until the 6 gates pass."
+    },
+    {
+      "tool": "public_records",
+      "status": "guidance",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Unverified",
+      "data": {
+        "sources": [
+          "eCourt Kokua (Hawaii courts, browser + CAPTCHA)",
+          "Hawaii DCCA business search",
+          "County property / tax records",
+          "News archives (Star-Advertiser, Civil Beat)"
+        ]
+      },
+      "note": "Guidance only \u2014 live record searches need the browser agent. A no-hit is not proof of no record."
+    },
+    {
+      "tool": "timeline",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "dated, sourced events only; gaps left as gaps"
+      },
+      "note": "Timeline built from the verified findings in this run."
+    },
+    {
+      "tool": "correlate",
+      "status": "ok",
+      "source": "osint-agent tool registry",
+      "date": "2026-11-20T18:00:19Z",
+      "confidence": "Medium",
+      "data": {
+        "rule": "verified overlaps only as edges"
+      },
+      "note": "Graph built from the verified overlaps in this run."
+    }
+  ],
+  "verified": [
+    {
+      "claim": "Tool case_intake ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool handle_enum.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool leak_search.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool breach_check.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool snapshot.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool like_sweep.py planned (dry-run) \u2014 no live evidence collected.",
+      "gates": {
+        "source": "fail",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "source",
+      "verdict": "Unverified \u2014 gates: source=fail, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: source."
+    },
+    {
+      "claim": "Tool reverse_image returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool public_records returned guidance only \u2014 manual step required, no evidence collected.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "fail",
+        "time": "fail",
+        "access": "fail",
+        "exit": "pass"
+      },
+      "confidence": "Unverified",
+      "weakest_gate": "corroboration",
+      "verdict": "Unverified \u2014 gates: source=weak, corroboration=fail, identity=fail, time=fail, access=fail, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool timeline ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    },
+    {
+      "claim": "Tool correlate ran OK \u2014 output needs the 6 gates applied by a human before it is a finding.",
+      "gates": {
+        "source": "weak",
+        "corroboration": "fail",
+        "identity": "weak",
+        "time": "weak",
+        "access": "pass",
+        "exit": "pass"
+      },
+      "confidence": "Low",
+      "weakest_gate": "corroboration",
+      "verdict": "Low \u2014 gates: source=weak, corroboration=fail, identity=weak, time=weak, access=pass, exit=pass. Weakest gate: corroboration."
+    }
+  ],
+  "counts": {
+    "Low": 3,
+    "Unverified": 7
+  },
+  "llm_note": "no-model mode: no local model reachable/configured; LLM step skipped, tools and 6-gate verifier still ran.",
+  "llm_plan_draft": "",
+  "llm_synthesis_draft": "",
+  "sanitise_notes": [],
+  "report": "/home/hatch/workspace/osint-agent/runs/20261120T180019Z-example-handle/report.md"
+}
